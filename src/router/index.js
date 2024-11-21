@@ -1,4 +1,3 @@
-
 /**
  * router/index.ts
  *
@@ -7,14 +6,27 @@
 
 // Composables
 import { createRouter, createWebHistory } from 'vue-router/auto'
-import { routes } from 'vue-router/auto-routes'
+import { routes as autoRoutes } from 'vue-router/auto-routes'
+
+// Defina suas rotas adicionais
+const customRoutes = [
+  {
+    path: '/',
+    name: 'index',
+    component: () => import('@/pages/index.vue'), // Exemplo de lazy-loading
+  },
+
+]
+
+// Combine as rotas automáticas com as personalizadas
+const routes = [...autoRoutes, ...customRoutes]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
 
-// Workaround for https://github.com/vitejs/vite/issues/11804
+// Workaround para https://github.com/vitejs/vite/issues/11804
 router.onError((err, to) => {
   if (err?.message?.includes?.('Failed to fetch dynamically imported module')) {
     if (!localStorage.getItem('vuetify:dynamic-reload')) {
