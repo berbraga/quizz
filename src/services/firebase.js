@@ -93,5 +93,43 @@ const getData = async (collectionName, docName = null) => {
     throw error;
   }
 };
+/**
+ * Check if a document exists in Firestore
+ * @param {string} collectionName - The Firestore collection name.
+ * @param {string} docName - Document name to check.
+ * @returns {boolean} - True if the document exists, false otherwise.
+ */
+const doesDocumentExist = async (collectionName, docName) => {
+  try {
+    const docRef = doc(db, collectionName, docName);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists();
+  } catch (error) {
+    console.error("Error checking document existence:", error);
+    throw error;
+  }
+};
 
-export { db, addData, getData };
+/**
+ * Check if a specific field value exists in any document of a collection
+ * @param {string} collectionName - The Firestore collection name.
+ * @param {string} fieldName - The field to check for.
+ * @param {any} value - The value to search for.
+ * @returns {boolean} - True if the value exists, false otherwise.
+ */
+const doesFieldValueExist = async (collectionName, fieldName, value) => {
+  try {
+    const querySnapshot = await getDocs(collection(db, collectionName));
+    for (const doc of querySnapshot.docs) {
+      if (doc.data()[fieldName] === value) {
+        return true;
+      }
+    }
+    return false;
+  } catch (error) {
+    console.error("Error checking field value existence:", error);
+    throw error;
+  }
+};
+
+export { db, addData, getData, doesDocumentExist, doesFieldValueExist };
