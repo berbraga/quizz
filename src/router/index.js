@@ -12,8 +12,28 @@ import { routes as autoRoutes } from 'vue-router/auto-routes'
 const customRoutes = [
   {
     path: '/',
-    name: 'index',
-    component: () => import('@/pages/index.vue'), // Exemplo de lazy-loading
+    name: 'login',
+    component: () => import('@/pages/login.vue'), // Exemplo de lazy-loading
+  },
+  {
+    path: '/cadastro',
+    name: 'cadastro',
+    component: () => import('@/pages/cadastro.vue'), // Exemplo de lazy-loading
+  },
+  {
+    path: '/forgotpassword',
+    name: 'esqueceuSenha',
+    component: () => import('@/pages/forgotPassword.vue'), // Exemplo de lazy-loading
+  },
+  {
+    path: '/professor',
+    name: 'professor',
+    component: () => import('@/pages/professor.vue'), // Exemplo de lazy-loading
+  },
+  {
+    path: '/aluno',
+    name: 'aluno',
+    component: () => import('@/pages/aluno.vue'), // Exemplo de lazy-loading
   },
 
 ]
