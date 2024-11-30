@@ -31,11 +31,35 @@ const customRoutes = [
     component: () => import('@/pages/professor.vue'), // Exemplo de lazy-loading
   },
   {
+    path: '/professor/novo-quiz',
+    name: 'novo-quiz',
+    component: () => import('@/pages/novoQuiz.vue'), // Exemplo de lazy-loading
+  },
+  {
+    path: '/quiz/:quizId/questions',
+    name: 'quiz-questions',
+    component: () => import('@/pages/quizQuestions.vue'), // Exemplo de lazy-loading
+    props: true, // Permite passar `quizId` para o componente
+  },
+  {
+    path: '/quiz/:quizId/add-question',
+    name: 'add-question',
+    component: () => import('@/pages/addQuestion.vue'), // Lazy-loading
+    props: true, // Permite passar o quizId como prop
+  },
+  {
+    path: '/aluno/quiz/:quizId',
+    name: 'quiz-responder',
+    component: () => import('@/pages/quizResponder.vue'), // Lazy-loading
+    props: true,
+  },
+
+
+  {
     path: '/aluno',
     name: 'aluno',
     component: () => import('@/pages/aluno.vue'), // Exemplo de lazy-loading
   },
-
 ]
 
 // Combine as rotas automáticas com as personalizadas
