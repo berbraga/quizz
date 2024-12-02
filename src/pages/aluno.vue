@@ -1,31 +1,46 @@
 <template>
-  <v-container class="py-5">
-    <v-card>
-      <v-card-title>
-        Bem-vindo, Aluno
-      </v-card-title>
-      <v-card-text>
-        <v-data-table
-          :headers="headers"
-          :items="quizzes"
-          item-value="id"
-          class="elevation-1"
-          dense
-        >
-          <template v-slot:top>
-            <v-toolbar flat>
-              <v-toolbar-title>Selecione um Quiz</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="fetchQuizzes">Atualizar</v-btn>
-            </v-toolbar>
-          </template>
-          <template v-slot:[`item.actions`]="{ item }">
-            <v-btn color="success" @click="goToQuiz(item.id)">
-              Responder Quiz
+  <v-container class="d-flex align-center justify-center ma-0 pa-0" style="height: 100vh;">
+    <v-card class="pa-10" elevation="3" style="width: 700px; max-width: 90%; min-height: 500px;">
+        <v-row align="center" justify="center">
+          <v-img src="/capelo.png" max-height="100" max-width="100" class="mr-3" alt="Capelo"></v-img>
+          <h1 class="text-indigo-darken-4 mb-0" style="font-size: 36px;">Study Quiz - Módulo Aluno</h1>
+        </v-row>
+
+        <v-row class="mb-5" justify="center" align="center">
+          <v-col cols="auto">
+            <v-img src="/atuacao.png" alt="atuacao" style="width: 70px; height: 70px;" class="mr-3"></v-img>
+          </v-col>
+          <v-col>
+            <v-btn
+            style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;">
+            Meu Desempenho
             </v-btn>
-          </template>
-        </v-data-table>
-      </v-card-text>
+          </v-col>
+        </v-row>
+
+        <v-row class="mb-5" justify="center" align="center">
+          <v-col cols="auto">
+            <v-img src="/ranking.png" alt="atuacao" style="width: 70px; height: 70px;" class="mr-3"></v-img>
+          </v-col>
+          <v-col>
+            <v-btn
+            style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;">
+            Ranking da Turma
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-row class="mb-5" justify="center" align="center">
+          <v-col cols="auto">
+            <v-img src="/play.png" alt="atuacao" style="width: 70px; height: 70px;" class="mr-3"></v-img>
+          </v-col>
+          <v-col>
+            <v-btn
+            style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;">
+            Iniciar Quiz
+            </v-btn>
+          </v-col>
+        </v-row>
     </v-card>
   </v-container>
 </template>
@@ -33,8 +48,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { getDocs, collection } from "firebase/firestore";
-import { db } from "@/services/firebase";
 
 const router = useRouter();
 
@@ -46,30 +59,4 @@ const headers = [
   { text: "Ações", value: "actions", sortable: false },
 ];
 
-// Função para buscar quizzes disponíveis
-const fetchQuizzes = async () => {
-  try {
-    const querySnapshot = await getDocs(collection(db, "quizzes"));
-    quizzes.value = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    console.log("Quizzes disponíveis:", quizzes.value);
-  } catch (error) {
-    console.error("Erro ao carregar os quizzes:", error);
-    alert("Erro ao carregar os quizzes. Tente novamente.");
-  }
-};
-
-// Redirecionar para a página de perguntas do quiz selecionado
-const goToQuiz = (quizId) => {
-  router.push(`/aluno/quiz/${quizId}`);
-};
-
-// Carrega os quizzes quando o componente é montado
-onMounted(fetchQuizzes);
 </script>
-
-<style scoped>
-/* Estilização adicional, se necessário */
-</style>

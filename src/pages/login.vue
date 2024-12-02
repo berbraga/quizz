@@ -1,62 +1,91 @@
 <template>
-  <v-container class="d-flex justify-center align-center" style="height: 100vh;">
-    <v-card elevation="4" class="pa-6" max-width="400">
-      <v-card-title class="text-h5 justify-center">
-        Login
-      </v-card-title>
-      <v-card-text>
-        <v-form>
-          <!-- Campo de Email -->
+  <v-container class="d-flex align-center justify-center ma-0 pa-0" style="height: 100vh;">
+    <v-card class="pa-10" elevation="3" style="width: 700px; max-width: 90%; height: 600px;">
+      
+      <v-row align="center" justify="center">
+        <v-img
+          src="/capelo.png"
+          max-height="100"
+          max-width="100"
+          class="mr-3"
+          alt="Capelo"
+        ></v-img>
+        <h1 class="text-blue mb-0" style="font-size: 36px;">Study Quiz</h1>
+      </v-row>
+
+      <v-divider class="my-6"></v-divider>
+
+      <v-row class="mb-5" justify="center" align="center">
+        <v-col cols="auto">
+          <v-img
+            src="/login.png"
+            alt="Login"
+            style="width: 70px; height: 70px;"
+            class="mr-3"
+          ></v-img>
+        </v-col>
+        <v-col>
           <v-text-field
-            label="Email"
+            label="Login"
             v-model="loginData.email"
             outlined
             clearable
             :rules="[rules.required, rules.email]"
+            class="w-100"
+            :style="{ backgroundColor: '#1E3A8A', color: 'white' }"
           ></v-text-field>
+        </v-col>
+      </v-row>
 
-          <!-- Campo de Senha -->
+      <!-- Campo de Senha -->
+      <v-row class="mb-6" justify="center" align="center">
+        <v-col cols="auto">
+          <v-img
+            src="/lock.png"
+            alt="Cadeado"
+            style="width: 70px; height: 70px;"
+            class="mr-3"
+          ></v-img>
+        </v-col>
+        <v-col>
           <v-text-field
+            type="password"
             label="Senha"
             v-model="loginData.password"
             outlined
-            type="password"
             clearable
             :rules="[rules.required]"
+            class="w-100"
+            :style="{ backgroundColor: '#1E3A8A', color: 'white' }"
           ></v-text-field>
-        </v-form>
-      </v-card-text>
-      <v-card-actions class="d-flex flex-column">
-        <!-- Botão Entrar -->
+        </v-col>
+
+      </v-row>
+
+      <v-row justify="space-between" class="mt-4">
         <v-btn
-          color="primary"
-          class="mb-3"
+          class="d-flex align-center justify-center"
+          style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;"
+          block
+          @click="goToCadastro"
+        >
+          Cadastrar
+        </v-btn>
+        <v-btn
+          class="d-flex align-center justify-center"
+          style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px; margin-top: 15px;"
           block
           @click="handleLogin"
         >
           Entrar
         </v-btn>
+      </v-row>
 
-        <!-- Botão Cadastrar -->
-        <v-btn
-          text
-          block
-          color="purple"
-          @click="goToCadastro"
-        >
-          Cadastrar
-        </v-btn>
-
-        <!-- Botão Esqueceu a senha -->
-        <v-btn
-          text
-          block
-          color="error"
-          @click="goToForgotPassword"
-        >
+      <v-row justify="center" style="margin-top: 20px;">
+        <a href="#" style="color: gray; font-size: 18px; text-decoration: none;" @click="goToForgotPassword">
           Esqueceu a senha?
-        </v-btn>
-      </v-card-actions>
+        </a>
+      </v-row>
     </v-card>
   </v-container>
 </template>

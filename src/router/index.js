@@ -48,7 +48,7 @@ const customRoutes = [
     props: true, // Permite passar o quizId como prop
   },
   {
-    path: '/aluno/quiz/:quizId',
+    path: '/quizAluno/quiz/:quizId',
     name: 'quiz-responder',
     component: () => import('@/pages/quizResponder.vue'), // Lazy-loading
     props: true,

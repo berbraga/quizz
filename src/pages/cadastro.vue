@@ -1,78 +1,95 @@
 <template>
-  <v-container class="d-flex justify-center align-center" style="height: 100vh;">
-    <v-card elevation="4" class="pa-6" max-width="500">
-      <v-card-title class="text-h5 justify-center">
-        Cadastro de Usuário
-      </v-card-title>
-      <v-card-text>
-        <v-form ref="form" v-model="isFormValid">
-          <!-- Campo de Nome -->
-          <v-text-field
-            label="Nome"
+  <v-container class="d-flex align-center justify-center ma-0 pa-0" style="height: 100vh;">
+    <v-card class="pa-10" elevation="3" style="width: 700px; max-width: 90%; min-height: 500px;">
+
+      <v-form ref="form" v-model="isFormValid">
+        <v-row align="center" justify="center">
+          <v-img src="/capelo.png" max-height="100" max-width="100" class="mr-3" alt="Capelo"></v-img>
+          <h1 class="text-blue mb-0" style="font-size: 36px;">Study Quiz</h1>
+        </v-row>
+
+        <v-divider class="my-6"></v-divider>
+
+        <v-row class="mb-5" justify="center" align="center">
+          <v-col cols="auto">
+            <v-img src="/email.png" alt="email" style="width: 70px; height: 70px;" class="mr-3"></v-img>
+          </v-col>
+          <v-col>
+            <v-text-field 
+              v-model="formData.email"
+              label="Email" 
+              outlined
+              clearable
+              :rules="[rules.required, rules.email]"
+              class="w-100"
+              :style="{ backgroundColor: '#1E3A8A', color: 'white' }"></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row class="mb-5" justify="center" align="center">
+          <v-col cols="auto">
+            <v-img src="/login.png" alt="Login" style="width: 70px; height: 70px;" class="mr-3"></v-img>
+          </v-col>
+          <v-col>
+            <v-text-field label="Login" 
             v-model="formData.name"
             outlined
             clearable
             :rules="[rules.required]"
-          ></v-text-field>
+            class="w-100"
+            :style="{ backgroundColor: '#1E3A8A', color: 'white' }"></v-text-field>
+          </v-col>
+        </v-row>
 
-          <!-- Campo de Email -->
-          <v-text-field
-            label="Email"
-            v-model="formData.email"
-            outlined
-            clearable
-            :rules="[rules.required, rules.email]"
-          ></v-text-field>
+        <v-row class="mb-6" justify="center" align="center">
+          <v-col cols="auto">
+            <v-img src="/lock.png" alt="Cadeado" style="width: 70px; height: 70px;" class="mr-3"></v-img>
+          </v-col>
+          <v-col>
+            <v-text-field type="password" label="Senha" outlined dense class="w-100" :rules="[rules.required, rules.password]" v-model="formData.password"
+              :style="{ backgroundColor: '#1E3A8A', color: 'white' }"></v-text-field>
+          </v-col>
+        </v-row>
 
-          <!-- Campo de Senha -->
-          <v-text-field
-            label="Senha"
-            v-model="formData.password"
-            type="password"
-            outlined
-            clearable
-            :rules="[rules.required, rules.password]"
-          ></v-text-field>
+        <v-row class="mb-6" justify="center" align="center">
+          <v-col cols="auto">
+            <v-img src="/lock.png" alt="Cadeado" style="width: 70px; height: 70px;" class="mr-3"></v-img>
+          </v-col>
+          <v-col>
+            <v-text-field type="password" label="Confirmar Senha" v-model="formData.confirmPassword" outlined clearable :rules="[rules.required, confirmPasswordRule]" class="w-100"
+              :style="{ backgroundColor: '#1E3A8A', color: 'white' }"></v-text-field>
+          </v-col>
 
-          <!-- Campo de Confirmar Senha -->
-          <v-text-field
-            label="Confirmar Senha"
-            v-model="formData.confirmPassword"
-            type="password"
-            outlined
-            clearable
-            :rules="[rules.required, confirmPasswordRule]"
-          ></v-text-field>
+        </v-row>
 
-          <!-- Checkbox: É Aluno -->
+        <v-row class="d-flex align-center justify-center">
           <v-checkbox
             label="Sou aluno"
             v-model="formData.isStudent"
           ></v-checkbox>
-        </v-form>
-      </v-card-text>
-      <v-card-actions class="d-flex flex-column">
-        <!-- Botão Cadastrar -->
-        <v-btn
-          color="primary"
-          class="mb-3"
-          block
-          :disabled="!isFormValid"
-          @click="handleRegister"
-        >
-          Cadastrar
-        </v-btn>
+        </v-row>  
 
-        <!-- Botão Voltar -->
-        <v-btn
-          color="secondary"
+        <v-row class="d-flex align-center justify-center">
+          <v-btn
+            style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;"
+            block
+            :disabled="!isFormValid"
+            @click="handleRegister"
+          >
+            Cadastrar
+          </v-btn>
+            <v-btn
+          style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px; margin-top: 15px;"
           block
           @click="goBack"
         >
           Voltar
-        </v-btn>
-      </v-card-actions>
+          </v-btn>
+        </v-row>
+      </v-form>
     </v-card>
+
+
   </v-container>
 </template>
 

@@ -6,6 +6,14 @@
       </v-card-title>
       <v-card-text>
         <v-form>
+          <div>
+            <select v-model="selected">
+              <option disabled value="">Escolha o nível</option>
+              <option>Difícil</option>
+              <option>Intermediário</option>
+              <option>Fácil</option>
+            </select>
+          </div>
           <!-- Campo para Nome do Quiz -->
           <v-text-field
             label="Nome do Quiz"

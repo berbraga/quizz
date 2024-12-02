@@ -15,6 +15,16 @@
             :rules="[rules.required]"
           ></v-textarea>
 
+          <div margin="10px">
+            <select v-model="selected">
+            <option disabled value="">Escolha o nível</option>
+              <option>Difícil</option>
+              <option>Intermediário</option>
+              <option>Fácil</option>
+            </select>
+          </div>
+
+
           <!-- Respostas com Botão para Selecionar a Correta -->
           <v-row>
             <v-col cols="12" md="6" v-for="(answer, index) in questionData.answers" :key="index">
