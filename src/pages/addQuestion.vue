@@ -15,16 +15,15 @@
             :rules="[rules.required]"
           ></v-textarea>
 
-          <div margin="10px">
-            <select v-model="selected">
-            <option disabled value="">Escolha o nível</option>
-              <option>Difícil</option>
-              <option>Intermediário</option>
-              <option>Fácil</option>
-            </select>
-          </div>
-
-
+            <v-select
+              v-model="questionData.level"
+              :items="['Difícil', 'Intermediário', 'Fácil']"
+              label="Escolha o nível"
+              outlined
+              clearable
+              :rules="[rules.required]"
+          ></v-select>
+          
           <!-- Respostas com Botão para Selecionar a Correta -->
           <v-row>
             <v-col cols="12" md="6" v-for="(answer, index) in questionData.answers" :key="index">
@@ -69,6 +68,7 @@ const questionData = reactive({
   text: "", // Texto da pergunta
   answers: ["", "", "", ""], // Quatro respostas possíveis
   correctAnswer: null, // Índice da resposta correta
+  level: ""
 });
 
 const rules = {
@@ -92,6 +92,7 @@ const addQuestion = async () => {
         text: questionData.text,
         answers: questionData.answers,
         correctAnswer: questionData.correctAnswer,
+        level: questionData.level
       });
       alert("Pergunta adicionada com sucesso!");
       router.push(`/quiz/${quizId}/questions`); // Redireciona para a página de perguntas

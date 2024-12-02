@@ -1,46 +1,37 @@
 <template>
   <v-container class="d-flex align-center justify-center ma-0 pa-0" style="height: 100vh;">
-    <v-card class="pa-10" elevation="3" style="width: 700px; max-width: 90%; min-height: 500px;">
+    <v-card class="pa-10 d-flex flex-column" elevation="3" style="width: 700px; max-width: 90%; min-height: 500px;">
         <v-row align="center" justify="center">
           <v-img src="/capelo.png" max-height="100" max-width="100" class="mr-3" alt="Capelo"></v-img>
           <h1 class="text-indigo-darken-4 mb-0" style="font-size: 36px;">Study Quiz - Módulo Aluno</h1>
         </v-row>
 
-        <v-row class="mb-5" justify="center" align="center">
-          <v-col cols="auto">
-            <v-img src="/atuacao.png" alt="atuacao" style="width: 70px; height: 70px;" class="mr-3"></v-img>
-          </v-col>
-          <v-col>
-            <v-btn
-            style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;">
+
+        <div class="d-flex my-4">
+          <v-img src="/atuacao.png" alt="atuacao" style="height: 55px;" width="25%"></v-img>
+            <v-btn width="75%"
+            style="background-color: cornflowerblue; color: white; font-size: 18px; padding: 12px; height: 50px;">
             Meu Desempenho
             </v-btn>
-          </v-col>
-        </v-row>
+        </div>
 
-        <v-row class="mb-5" justify="center" align="center">
-          <v-col cols="auto">
-            <v-img src="/ranking.png" alt="atuacao" style="width: 70px; height: 70px;" class="mr-3"></v-img>
-          </v-col>
-          <v-col>
-            <v-btn
-            style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;">
+        <div class="d-flex my-4">
+          <v-img src="/ranking.png" alt="ranking" style="height: 55px;" width="25%"></v-img>
+            <v-btn width="75%"
+            style="background-color: cornflowerblue; color: white; font-size: 18px; padding: 12px; height: 50px;">
             Ranking da Turma
             </v-btn>
-          </v-col>
-        </v-row>
+        </div>
 
-        <v-row class="mb-5" justify="center" align="center">
-          <v-col cols="auto">
-            <v-img src="/play.png" alt="atuacao" style="width: 70px; height: 70px;" class="mr-3"></v-img>
-          </v-col>
-          <v-col>
-            <v-btn
-            style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;">
+
+        <div class="d-flex my-4">
+          <v-img src="/play.png" alt="Play" style="height: 55px;" width="25%"></v-img>
+            <v-btn width="75%"
+            style="background-color: cornflowerblue; color: white; font-size: 18px; padding: 12px; height: 50px;"
+            @click="startQuiz">
             Iniciar Quiz
             </v-btn>
-          </v-col>
-        </v-row>
+        </div>
     </v-card>
   </v-container>
 </template>
@@ -58,5 +49,9 @@ const headers = [
   { text: "Nome do Quiz", value: "name", align: "start" },
   { text: "Ações", value: "actions", sortable: false },
 ];
+
+const startQuiz = async () => {
+  router.push("/quizAluno");            
+}
 
 </script>

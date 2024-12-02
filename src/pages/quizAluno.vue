@@ -63,7 +63,7 @@ const fetchQuizzes = async () => {
 
 // Redirecionar para a página de perguntas do quiz selecionado
 const goToQuiz = (quizId) => {
-  router.push(`/aluno/quiz/${quizId}`);
+  router.push(`/quizAluno/quiz/${quizId}`);
 };
 
 // Carrega os quizzes quando o componente é montado
