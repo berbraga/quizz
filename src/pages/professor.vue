@@ -55,6 +55,7 @@ const router = useRouter();
 
 const quizzes = ref([]);
 
+const user = JSON.parse(localStorage.getItem('user'));
 // Cabeçalhos da tabela
 const headers = [
   { text: "Nome do Quiz", value: "name", align: "start" },
@@ -62,11 +63,10 @@ const headers = [
 ];
 
 const startQuiz = async () => {
-  router.push("/quizAluno");            
+  router.push("/quizAluno");
 }
-
 const cadastrarPerguntas = async () => {
-  router.push("/quizProfessor");            
+  router.push(`/professor/${user.user}/quizProfessor`);
 }
 
 </script>

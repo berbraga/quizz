@@ -43,7 +43,7 @@ import { db } from "@/services/firebase";
 const router = useRouter();
 
 const quizzes = ref([]);
-
+const user = JSON.parse(localStorage.getItem('user'));
 // Cabeçalhos da tabela
 const headers = [
   { text: "Nome do Quiz", value: "name", align: "start" },
@@ -67,7 +67,7 @@ const fetchQuizzes = async () => {
 
 // Redirecionar para a página de perguntas do quiz selecionado
 const goToQuiz = (quizId) => {
-  router.push(`/quizAluno/quiz/${quizId}`);
+  router.push(`/aluno/${user.id}/quizAluno/quiz/${quizId}`);
 };
 
 // Carrega os quizzes quando o componente é montado

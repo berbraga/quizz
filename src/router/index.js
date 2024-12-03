@@ -25,43 +25,51 @@ const customRoutes = [
     name: 'esqueceuSenha',
     component: () => import('@/pages/forgotPassword.vue'), // Exemplo de lazy-loading
   },
+
+
   {
-    path: '/quizProfessor',
+    path: '/professor/:professorId/quizProfessor',
     name: 'quizProfessor',
     component: () => import('@/pages/quizProfessor.vue'), // Exemplo de lazy-loading
   },
   {
-    path: '/professor',
+    path: '/professor/:professorId',
     name: 'professor',
     component: () => import('@/pages/professor.vue'), // Exemplo de lazy-loading
   },
   {
-    path: '/professor/novo-quiz',
+    path: '/professor/:professorId/novo-quiz',
     name: 'novo-quiz',
     component: () => import('@/pages/novoQuiz.vue'), // Exemplo de lazy-loading
   },
   {
-    path: '/quiz/:quizId/questions',
+    path: '/professor/:professorId/quiz/:quizId/questions',
     name: 'quiz-questions',
     component: () => import('@/pages/quizQuestions.vue'), // Exemplo de lazy-loading
     props: true, // Permite passar `quizId` para o componente
   },
   {
-    path: '/quiz/:quizId/add-question',
+    path: '/professor/:professorId/quiz/:quizId/add-question',
     name: 'add-question',
     component: () => import('@/pages/addQuestion.vue'), // Lazy-loading
     props: true, // Permite passar o quizId como prop
   },
   {
-    path: '/quizAluno/quiz/:quizId',
+    path: '/aluno/:alunoId/quizAluno/quiz/:quizId',
     name: 'quiz-responder',
     component: () => import('@/pages/quizResponder.vue'), // Lazy-loading
     props: true,
   },
+  {
+    path: '/aluno/:alunoId/desempenho',
+    name: 'alunoDesempenho',
+    component: () => import('@/pages/alunoDesempenho.vue'), // Lazy-loading
+
+  },
 
 
   {
-    path: '/aluno',
+    path: '/aluno/:alunoId',
     name: 'aluno',
     component: () => import('@/pages/aluno.vue'), // Exemplo de lazy-loading
   },

@@ -123,11 +123,11 @@ const handleLogin = async () => {
           if (user.isStudent) {
             // Redireciona para a rota do aluno
             localStorage.setItem('user', JSON.stringify(user));
-            router.push("/aluno");
+            router.push(`/aluno/${user.id}`);
           } else {
             localStorage.setItem('user', JSON.stringify(user));
             // Redireciona para a rota do professor
-            router.push("/professor");
+            router.push(`/professor/${user.id}`);
           }
         } else {
           alert("Senha incorreta!");

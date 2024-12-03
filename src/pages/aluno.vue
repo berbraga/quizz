@@ -45,7 +45,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const quizzes = ref([]);
-
+const user = JSON.parse(localStorage.getItem('user'));
 // Cabeçalhos da tabela
 const headers = [
   { text: "Nome do Quiz", value: "name", align: "start" },
@@ -53,7 +53,7 @@ const headers = [
 ];
 
 const MeuDesempenho = () => {
-  router.push("/desempenhoAluno");
+  router.push(`/aluno/${user.id}/desempenho`);
 }
 const startQuiz = async () => {
   router.push("/quizAluno");

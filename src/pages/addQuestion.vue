@@ -23,7 +23,7 @@
               clearable
               :rules="[rules.required]"
           ></v-select>
-          
+
           <!-- Respostas com Botão para Selecionar a Correta -->
           <v-row>
             <v-col cols="12" md="6" v-for="(answer, index) in questionData.answers" :key="index">
@@ -79,7 +79,7 @@ const rules = {
 const setCorrectAnswer = (index) => {
   questionData.correctAnswer = index;
 };
-
+const user = JSON.parse(localStorage.getItem('user'));
 // Função para adicionar a pergunta ao Firestore
 const addQuestion = async () => {
   if (
@@ -95,7 +95,7 @@ const addQuestion = async () => {
         level: questionData.level
       });
       alert("Pergunta adicionada com sucesso!");
-      router.push(`/quiz/${quizId}/questions`); // Redireciona para a página de perguntas
+      router.push(`/professor/${user.id}/quiz/${quizId}/questions`); // Redireciona para a página de perguntas
     } catch (error) {
       console.error("Erro ao adicionar pergunta:", error);
       alert("Erro ao adicionar pergunta. Tente novamente.");
@@ -107,7 +107,7 @@ const addQuestion = async () => {
 
 // Função para voltar
 const goBack = () => {
-  router.push(`/quiz/${quizId}/questions`);
+  router.push(`/professor/${user.id}/quiz/${quizId}/questions`);
 };
 </script>
 

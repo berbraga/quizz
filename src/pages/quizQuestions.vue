@@ -44,7 +44,7 @@ const route = useRoute();
 const quizId = route.params.quizId; // Obtém o ID do quiz pela rota
 const quizName = ref("Nome do Quiz"); // Nome do quiz (carregar se necessário)
 const questions = ref([]);
-
+const user = JSON.parse(localStorage.getItem('user'));
 // Define os cabeçalhos da tabela
 const headers = [
   { text: "Pergunta", value: "question", align: "start" },
@@ -83,7 +83,7 @@ const deleteQuestion = async (id) => {
 
 // Função para adicionar uma nova pergunta
 const addQuestion = () => {
-  router.push(`/quiz/${quizId}/add-question`);
+  router.push(`aluno/${user.id}/quiz/${quizId}/add-question`);
 };
 
 // Carrega as perguntas quando o componente é montado

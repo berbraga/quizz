@@ -43,7 +43,7 @@ import { db } from "@/services/firebase"; // Certifique-se de que está apontand
 
 const router = useRouter();
 const quizzes = ref([]);
-
+const user = JSON.parse(localStorage.getItem('user'));
 // Define os cabeçalhos da tabela
 const headers = [
   { text: "Nome do Quiz", value: "name", align: "start" },
@@ -67,7 +67,7 @@ const fetchQuizzes = async () => {
 
 // Função para ir para a página de perguntas de um quiz
 const goToQuizQuestions = (quizId) => {
-  router.push(`/quiz/${quizId}/questions`); // Redireciona para a página de perguntas
+  router.push(`/professor/${user.id}/quiz/${quizId}/questions`); // Redireciona para a página de perguntas
 };
 
 // Função para excluir um quiz
@@ -87,7 +87,7 @@ const deleteQuiz = async (id) => {
 
 // Função para ir para o formulário de novo quiz
 const goToNewQuiz = () => {
-  router.push("/professor/novo-quiz");
+  router.push(`/professor/${user.id}/novo-quiz`);
 };
 
 // Carrega os quizzes quando o componente é montado

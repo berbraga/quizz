@@ -65,7 +65,7 @@ const createQuiz = async () => {
         createdAt: new Date().toISOString(),
       });
       alert("Quiz criado com sucesso!");
-      router.push("/professor"); // Redireciona para a página de quizzes
+      router.push(`/professor/${user.id}`); // Redireciona para a página de quizzes
     } catch (error) {
       console.error("Erro ao criar quiz:", error);
       alert("Erro ao criar quiz. Tente novamente.");
@@ -77,7 +77,7 @@ const createQuiz = async () => {
 
 // Função para voltar
 const goBack = () => {
-  router.push("/professor");
+  router.push(`/professor/${user.id}`);
 };
 </script>
 
