@@ -67,11 +67,15 @@ const customRoutes = [
 
   },
 
-
   {
     path: '/aluno/:alunoId',
     name: 'aluno',
     component: () => import('@/pages/aluno.vue'), // Exemplo de lazy-loading
+  },
+  {
+    path: '/perfil',
+    name: 'perfil',
+    component: () => import('@/pages/perfil.vue'), // Exemplo de lazy-loading
   },
 ]
 
