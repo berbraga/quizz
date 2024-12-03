@@ -47,12 +47,13 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "@/services/firebase";
-import { useRtl } from "vuetify";
 
 const router = useRouter();
 
+// Estado para armazenar quizzes
 const quizzes = ref([]);
-const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem("user")); // Usuário logado
+
 // Cabeçalhos da tabela
 const headers = [
   { text: "Nome do Quiz", value: "name", align: "center" },
@@ -60,14 +61,22 @@ const headers = [
   { text: "Ações", value: "actions", sortable: false, align: "center" },
 ];
 
-// Função para buscar quizzes disponíveis
+// Função para buscar quizzes disponíveis e filtrar os já respondidos
 const fetchQuizzes = async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, "quizzes"));
-    quizzes.value = querySnapshot.docs.map((doc) => ({
+    // Busca todos os quizzes disponíveis
+    const quizzesSnapshot = await getDocs(collection(db, "quizzes"));
+    const allQuizzes = quizzesSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
+
+    // Filtra quizzes que o usuário ainda não respondeu
+    quizzes.value = allQuizzes.filter((quiz) => {
+      const results = quiz.results || []; // Verifica se há resultados
+      return !results.some((result) => result.userId === user.id); // Exclui quizzes respondidos pelo usuário
+    });
+
     console.log("Quizzes disponíveis:", quizzes.value);
   } catch (error) {
     console.error("Erro ao carregar os quizzes:", error);
@@ -80,16 +89,14 @@ const goToQuiz = (quizId) => {
   router.push(`/aluno/${user.id}/quizAluno/quiz/${quizId}`);
 };
 
-const goBack = () =>{
-  const user = JSON.parse(localStorage.getItem('user'));
-
-  if(user.isStudent == false){
-    router.push(`/professor/${user.id}`)
-  }else{
-    router.push(`/aluno/${user.id}`)
+// Função para voltar
+const goBack = () => {
+  if (user.isStudent == false) {
+    router.push(`/professor/${user.id}`);
+  } else {
+    router.push(`/aluno/${user.id}`);
   }
-  
- }
+};
 
 // Carrega os quizzes quando o componente é montado
 onMounted(fetchQuizzes);
