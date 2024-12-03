@@ -1,6 +1,6 @@
 <template>
-  <v-container class="py-5 d-flex align-center justify-center">
-    <v-card class="text-center" max-width="600">
+  <v-container class="py-5 d-flex align-center justify-center" style="height: 100vh;">
+    <v-card class="text-center" width="800px" max-width="600">
       <v-card-title>
         Responda o Quiz: {{ quizName }}
       </v-card-title>
