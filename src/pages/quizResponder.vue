@@ -49,6 +49,7 @@ const fetchQuestions = async () => {
     }));
     questions.value = questionList;
     answers.value = Array(questionList.length).fill(null); // Inicializa respostas
+    console.log(answers);
   } catch (error) {
     console.error("Erro ao carregar as perguntas:", error);
     alert("Erro ao carregar as perguntas. Tente novamente.");
