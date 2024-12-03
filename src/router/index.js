@@ -26,6 +26,11 @@ const customRoutes = [
     component: () => import('@/pages/forgotPassword.vue'), // Exemplo de lazy-loading
   },
   {
+    path: '/quizProfessor',
+    name: 'quizProfessor',
+    component: () => import('@/pages/quizProfessor.vue'), // Exemplo de lazy-loading
+  },
+  {
     path: '/professor',
     name: 'professor',
     component: () => import('@/pages/professor.vue'), // Exemplo de lazy-loading
