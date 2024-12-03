@@ -42,6 +42,15 @@ import { addData } from "@/services/firebase"; // Função para adicionar ao Fir
 
 const router = useRouter();
 
+onMounted(() => {
+
+const user = JSON.parse(localStorage.getItem('user'));
+
+if (!user || !user.isStudent) {
+  router.push('/sem-permissao'); // Redireciona para a página de sem permissão se não for professor
+}
+});
+
 // Dados do formulário
 const quizData = reactive({
   name: "",

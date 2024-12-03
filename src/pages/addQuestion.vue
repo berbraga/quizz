@@ -55,6 +55,16 @@
 </template>
 
 <script setup>
+
+onMounted(() => {
+
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  if (!user || user.isStudent) {
+    router.push('/sem-permissao'); // Redireciona para a página de sem permissão se não for professor
+  }
+});
+
 import { reactive } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { addData } from "@/services/firebase";

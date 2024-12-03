@@ -15,13 +15,8 @@
             <v-img src="/email.png" alt="email" style="width: 70px; height: 70px;" class="mr-3"></v-img>
           </v-col>
           <v-col>
-            <v-text-field
-              v-model="formData.email"
-              label="Email"
-              outlined
-              clearable
-              :rules="[rules.required, rules.email]"
-              class="w-100"
+            <v-text-field v-model="formData.email" label="Email" outlined clearable
+              :rules="[rules.required, rules.email]" class="w-100"
               :style="{ backgroundColor: '#1E3A8A', color: 'white' }"></v-text-field>
           </v-col>
         </v-row>
@@ -31,13 +26,8 @@
             <v-img src="/login.png" alt="Login" style="width: 70px; height: 70px;" class="mr-3"></v-img>
           </v-col>
           <v-col>
-            <v-text-field label="Login"
-            v-model="formData.name"
-            outlined
-            clearable
-            :rules="[rules.required]"
-            class="w-100"
-            :style="{ backgroundColor: '#1E3A8A', color: 'white' }"></v-text-field>
+            <v-text-field label="Login" v-model="formData.name" outlined clearable :rules="[rules.required]"
+              class="w-100" :style="{ backgroundColor: '#1E3A8A', color: 'white' }"></v-text-field>
           </v-col>
         </v-row>
 
@@ -46,7 +36,8 @@
             <v-img src="/lock.png" alt="Cadeado" style="width: 70px; height: 70px;" class="mr-3"></v-img>
           </v-col>
           <v-col>
-            <v-text-field type="password" label="Senha" outlined dense class="w-100" :rules="[rules.required, rules.password]" v-model="formData.password"
+            <v-text-field type="password" label="Senha" outlined dense class="w-100"
+              :rules="[rules.required, rules.password]" v-model="formData.password"
               :style="{ backgroundColor: '#1E3A8A', color: 'white' }"></v-text-field>
           </v-col>
         </v-row>
@@ -56,35 +47,33 @@
             <v-img src="/lock.png" alt="Cadeado" style="width: 70px; height: 70px;" class="mr-3"></v-img>
           </v-col>
           <v-col>
-            <v-text-field type="password" label="Confirmar Senha" v-model="formData.confirmPassword" outlined clearable :rules="[rules.required, confirmPasswordRule]" class="w-100"
+            <v-text-field type="password" label="Confirmar Senha" v-model="formData.confirmPassword" outlined clearable
+              :rules="[rules.required, confirmPasswordRule]" class="w-100"
               :style="{ backgroundColor: '#1E3A8A', color: 'white' }"></v-text-field>
           </v-col>
 
         </v-row>
 
         <v-row class="d-flex align-center justify-center">
-          <v-checkbox
-            label="Sou aluno"
-            v-model="formData.isStudent"
-          ></v-checkbox>
+          <v-checkbox label="Sou aluno" v-model="formData.isStudent"></v-checkbox>
         </v-row>
 
         <v-row class="d-flex align-center justify-center">
-          <v-btn
-            style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;"
-            block
-            :disabled="!isFormValid"
-            @click="handleRegister"
-          >
-            Cadastrar
-          </v-btn>
+          <v-col>
             <v-btn
-          style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px; margin-top: 15px;"
-          block
-          @click="goBack"
-        >
-          Voltar
-          </v-btn>
+              style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;"
+              block @click="goBack">
+              Voltar
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn
+              style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;"
+              block :disabled="!isFormValid" @click="handleRegister">
+              Cadastrar
+            </v-btn>
+          </v-col>
+
         </v-row>
       </v-form>
     </v-card>
@@ -114,7 +103,7 @@ const rules = {
   required: (value) => !!value || "Campo obrigatório",
   email: (value) => /\S+@\S+\.\S+/.test(value) || "E-mail inválido",
   password: (value) =>
-    value.length >= 8|| "A senha deve ter pelo menos 8 caracteres",
+    value.length >= 8 || "A senha deve ter pelo menos 8 caracteres",
 };
 
 // Regra para confirmar a senha

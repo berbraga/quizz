@@ -35,10 +35,10 @@
         </div>
 
         <div class="d-flex justify-center mt-10" width="100%" >
-          <v-btn class="mx-2" style="background-color: cornflowerblue; color: white; font-size: 15px; padding: 10px; height: 40px;">
+          <v-btn class="mx-2" style="background-color: cornflowerblue; color: white; font-size: 15px; padding: 10px; height: 40px;" @click="perfilCadastro">
             Perfil
           </v-btn>
-          <v-btn  class=""style="background-color: cornflowerblue; color: white; font-size: 15px; padding: 10px; height: 40px;">
+          <v-btn style="background-color: cornflowerblue; color: white; font-size: 15px; padding: 10px; height: 40px;" @click="sair">
             Sair
           </v-btn>
         </div>
@@ -52,6 +52,15 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+
+onMounted(() => {
+
+const user = JSON.parse(localStorage.getItem('user'));
+
+if (!user || user.isStudent) {
+  router.push('/sem-permissao'); // Redireciona para a página de sem permissão se não for professor
+}
+});
 
 const quizzes = ref([]);
 
@@ -67,6 +76,14 @@ const startQuiz = async () => {
 }
 const cadastrarPerguntas = async () => {
   router.push(`/professor/${user.user}/quizProfessor`);
+}
+
+const perfilCadastro = async () => {
+  router.push(`/perfil`);
+}
+
+const sair = async () => {
+  router.push(`/login`);
 }
 
 </script>

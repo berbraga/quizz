@@ -77,6 +77,16 @@ const customRoutes = [
     name: 'perfil',
     component: () => import('@/pages/perfil.vue'), // Exemplo de lazy-loading
   },
+  {
+    path: '/sem-permissao',
+    name: 'sem-permissao',
+    component: () => import('@/pages/semPermissao.vue'), // Exemplo de lazy-loading
+  },
+  {
+    path: '/desempenho',
+    name: 'desempenho',
+    component: () => import('@/pages/meuDesempenho.vue'), // Exemplo de lazy-loading
+  },
 ]
 
 // Combine as rotas automáticas com as personalizadas
