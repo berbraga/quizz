@@ -36,15 +36,6 @@
           <!-- Navegação -->
           <div class="mt-4">
             <v-btn
-              class="mr-4"
-              v-if="currentQuestionIndex > 0"
-              color="primary"
-              @click="prevQuestion"
-            >
-              Anterior
-            </v-btn>
-
-            <v-btn
               class="mx-4"
               v-if="currentQuestionIndex === questions.length - 1"
               color="success"
