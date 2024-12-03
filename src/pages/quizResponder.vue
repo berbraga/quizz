@@ -64,11 +64,12 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { getDocs, collection, doc, updateDoc, arrayUnion } from "firebase/firestore"; // Importa arrayUnion
 import { db } from "@/services/firebase";
 
 const route = useRoute();
+const router = useRouter();
 const quizId = route.params.quizId; // Obtém o ID do quiz da rota
 const quizName = ref("Quiz"); // Nome do quiz
 const questions = ref([]); // Perguntas do quiz
@@ -89,6 +90,7 @@ const fetchQuestions = async () => {
     }));
     questions.value = questionList;
     answers.value = Array(questionList.length).fill(null); // Inicializa respostas
+    console.log()
     startTimer(); // Inicia o timer para a primeira pergunta
   } catch (error) {
     console.error("Erro ao carregar as perguntas:", error);
@@ -144,7 +146,7 @@ const prevQuestion = () => {
 // Função para enviar as respostas e salvar acertos/erros no Firestore
 const submitQuiz = async () => {
   clearInterval(timerInterval); // Para o timer ao finalizar o quiz
-
+  const user = JSON.parse(localStorage.getItem('user'));
   let correctCount = 0;
 
   // Conta as respostas corretas
@@ -177,9 +179,16 @@ const submitQuiz = async () => {
     alert(
       `Você acertou ${correctCount} de ${totalQuestions} perguntas. Porcentagem de acerto: ${accuracy}%`
     );
+
   } catch (error) {
     console.error("Erro ao salvar os resultados:", error);
     alert("Erro ao salvar os resultados do quiz. Tente novamente.");
+  }
+
+  if(user.isStudent == false){
+      router.push(`/professor/${user.id}`)
+    }else{
+      router.push(`/aluno/${user.id}`)
   }
 };
 
