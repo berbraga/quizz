@@ -1,23 +1,58 @@
 <template>
-  <v-container class="py-5">
-    <v-card>
+  <v-container class="py-5 d-flex align-center justify-center">
+    <v-card class="text-center" max-width="600">
       <v-card-title>
         Responda o Quiz: {{ quizName }}
       </v-card-title>
       <v-card-text>
         <div v-if="questions.length">
-          <div v-for="(question, index) in questions" :key="index" class="mb-5">
-            <h4>{{ question.text }}</h4>
-            <v-radio-group v-model="answers[index]" class="mt-3">
-              <v-radio
-                v-for="(answer, i) in question.answers"
+          <!-- Pergunta Atual -->
+          <div>
+            <div class="d-flex">
+              <h4 class="mb-5">{{ questions[currentQuestionIndex].text }}</h4>
+              <v-spacer></v-spacer>
+              <small>{{ questions[currentQuestionIndex].level }}</small>
+            </div>
+            <div class="d-flex flex-column align-center">
+              <!-- Respostas como botões -->
+              <v-btn
+                v-for="(answer, i) in questions[currentQuestionIndex].answers"
                 :key="i"
-                :label="answer"
-                :value="i"
-              ></v-radio>
-            </v-radio-group>
+                class="my-2"
+                color="primary"
+                block
+                @click="selectAnswer(i)"
+              >
+                {{ answer }}
+              </v-btn>
+            </div>
           </div>
-          <v-btn color="success" @click="submitQuiz">Enviar Respostas</v-btn>
+
+          <!-- Timer -->
+          <div class="mt-4">
+            <h5>Tempo restante: {{ timer }} segundos</h5>
+          </div>
+
+          <!-- Navegação -->
+          <div class="mt-4">
+            <v-btn
+              class="mr-4"
+              v-if="currentQuestionIndex > 0"
+              color="primary"
+              @click="prevQuestion"
+            >
+              Anterior
+            </v-btn>
+
+            <v-btn
+              class="mx-4"
+              v-if="currentQuestionIndex === questions.length - 1"
+              color="success"
+              @click="submitQuiz"
+            >
+              Enviar Respostas
+            </v-btn>
+          </div>
         </div>
         <div v-else>
           <p>Nenhuma pergunta encontrada para este quiz.</p>
@@ -28,9 +63,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, doc, updateDoc, arrayUnion } from "firebase/firestore"; // Importa arrayUnion
 import { db } from "@/services/firebase";
 
 const route = useRoute();
@@ -38,44 +73,125 @@ const quizId = route.params.quizId; // Obtém o ID do quiz da rota
 const quizName = ref("Quiz"); // Nome do quiz
 const questions = ref([]); // Perguntas do quiz
 const answers = ref([]); // Respostas selecionadas pelo aluno
+const currentQuestionIndex = ref(0); // Índice da pergunta atual
+const timer = ref(180); // Timer para cada pergunta
+let timerInterval = null; // Armazena a referência do intervalo
 
 // Função para buscar as perguntas do quiz
 const fetchQuestions = async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, `questions/${quizId}/items`));
+    const querySnapshot = await getDocs(
+      collection(db, `questions/${quizId}/items`)
+    );
     const questionList = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
     questions.value = questionList;
     answers.value = Array(questionList.length).fill(null); // Inicializa respostas
+    startTimer(); // Inicia o timer para a primeira pergunta
   } catch (error) {
     console.error("Erro ao carregar as perguntas:", error);
     alert("Erro ao carregar as perguntas. Tente novamente.");
   }
 };
 
-// Função para enviar as respostas e calcular a porcentagem de acerto
-const submitQuiz = () => {
+// Função para iniciar o timer
+const startTimer = () => {
+  timer.value = 180; // Reinicia o timer
+  clearInterval(timerInterval); // Garante que não há outro timer rodando
+  timerInterval = setInterval(() => {
+    if (timer.value > 0) {
+      timer.value--;
+    } else {
+      // Quando o tempo acabar, passa para a próxima pergunta ou finaliza
+      if (currentQuestionIndex.value < questions.value.length - 1) {
+        nextQuestion();
+      } else {
+        clearInterval(timerInterval); // Para o timer
+        submitQuiz(); // Finaliza o quiz
+      }
+    }
+  }, 1000); // Atualiza a cada segundo
+};
+
+// Função para selecionar uma resposta
+const selectAnswer = (index) => {
+  answers.value[currentQuestionIndex.value] = index; // Define a resposta para a pergunta atual
+  if (currentQuestionIndex.value < questions.value.length - 1) {
+    nextQuestion(); // Avança para a próxima pergunta
+  } else {
+    submitQuiz(); // Finaliza o quiz na última pergunta
+  }
+};
+
+// Navega para a próxima pergunta
+const nextQuestion = () => {
+  if (currentQuestionIndex.value < questions.value.length - 1) {
+    currentQuestionIndex.value++;
+    startTimer(); // Reinicia o timer ao mudar de pergunta
+  }
+};
+
+// Navega para a pergunta anterior
+const prevQuestion = () => {
+  if (currentQuestionIndex.value > 0) {
+    currentQuestionIndex.value--;
+    startTimer(); // Reinicia o timer ao mudar de pergunta
+  }
+};
+
+// Função para enviar as respostas e salvar acertos/erros no Firestore
+const submitQuiz = async () => {
+  clearInterval(timerInterval); // Para o timer ao finalizar o quiz
+
   let correctCount = 0;
 
   // Conta as respostas corretas
   questions.value.forEach((question, index) => {
-    if (answers[index] === question.correctAnswer) {
+    if (answers.value[index] === question.correctAnswer) {
       correctCount++;
     }
   });
 
-  // Calcula a porcentagem de acerto
   const totalQuestions = questions.value.length;
+  const incorrectCount = totalQuestions - correctCount; // Calcula erros
   const accuracy = ((correctCount / totalQuestions) * 100).toFixed(2);
 
-  alert(`Você acertou ${correctCount} de ${totalQuestions} perguntas. Porcentagem de acerto: ${accuracy}%`);
+  try {
+    const user = JSON.parse(localStorage.getItem('user')); // Obtém o usuário atual
+    const quizRef = doc(db, `quizzes/${quizId}`);
+    const newResult = {
+      userId: user?.id || 'guest', // ID do usuário ou 'guest'
+      correct: correctCount,
+      incorrect: incorrectCount,
+      accuracy: parseFloat(accuracy),
+      timestamp: new Date().toISOString(),
+    };
+
+    // Adiciona o resultado ao array no Firestore
+    await updateDoc(quizRef, {
+      results: arrayUnion(newResult), // Incrementa o array com o novo resultado
+    });
+
+    alert(
+      `Você acertou ${correctCount} de ${totalQuestions} perguntas. Porcentagem de acerto: ${accuracy}%`
+    );
+  } catch (error) {
+    console.error("Erro ao salvar os resultados:", error);
+    alert("Erro ao salvar os resultados do quiz. Tente novamente.");
+  }
 };
 
 // Carrega as perguntas quando o componente é montado
 onMounted(fetchQuestions);
+
+// Limpa o timer ao desmontar o componente
+onUnmounted(() => {
+  clearInterval(timerInterval);
+});
 </script>
+
 
 <style scoped>
 /* Estilização adicional, se necessário */

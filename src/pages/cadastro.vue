@@ -15,9 +15,9 @@
             <v-img src="/email.png" alt="email" style="width: 70px; height: 70px;" class="mr-3"></v-img>
           </v-col>
           <v-col>
-            <v-text-field 
+            <v-text-field
               v-model="formData.email"
-              label="Email" 
+              label="Email"
               outlined
               clearable
               :rules="[rules.required, rules.email]"
@@ -31,7 +31,7 @@
             <v-img src="/login.png" alt="Login" style="width: 70px; height: 70px;" class="mr-3"></v-img>
           </v-col>
           <v-col>
-            <v-text-field label="Login" 
+            <v-text-field label="Login"
             v-model="formData.name"
             outlined
             clearable
@@ -67,7 +67,7 @@
             label="Sou aluno"
             v-model="formData.isStudent"
           ></v-checkbox>
-        </v-row>  
+        </v-row>
 
         <v-row class="d-flex align-center justify-center">
           <v-btn
@@ -114,7 +114,7 @@ const rules = {
   required: (value) => !!value || "Campo obrigatório",
   email: (value) => /\S+@\S+\.\S+/.test(value) || "E-mail inválido",
   password: (value) =>
-    value.length >= 6 || "A senha deve ter pelo menos 6 caracteres",
+    value.length >= 8|| "A senha deve ter pelo menos 8 caracteres",
 };
 
 // Regra para confirmar a senha

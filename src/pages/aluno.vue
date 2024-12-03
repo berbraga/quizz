@@ -10,8 +10,10 @@
         <div class="d-flex my-4">
           <v-img src="/atuacao.png" alt="atuacao" style="height: 55px;" width="25%"></v-img>
             <v-btn width="75%"
-            style="background-color: cornflowerblue; color: white; font-size: 18px; padding: 12px; height: 50px;">
-            Meu Desempenho
+              @click="MeuDesempenho"
+              style="background-color: cornflowerblue; color: white; font-size: 18px; padding: 12px; height: 50px;"
+              >
+              Meu Desempenho
             </v-btn>
         </div>
 
@@ -50,8 +52,11 @@ const headers = [
   { text: "Ações", value: "actions", sortable: false },
 ];
 
+const MeuDesempenho = () => {
+  router.push("/desempenhoAluno");
+}
 const startQuiz = async () => {
-  router.push("/quizAluno");            
+  router.push("/quizAluno");
 }
 
 </script>

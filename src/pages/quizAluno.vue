@@ -20,9 +20,13 @@
             </v-toolbar>
           </template>
           <template v-slot:[`item.actions`]="{ item }">
-            <v-btn color="success" @click="goToQuiz(item.id)">
-              Responder Quiz
-            </v-btn>
+            <div class="d-flex">
+              <v-btn color="success" @click="goToQuiz(item.id)">
+                Responder Quiz
+              </v-btn>
+              <v-spacer></v-spacer>
+              <p class="ma-0">{{ item.level }}</p>
+            </div>
           </template>
         </v-data-table>
       </v-card-text>

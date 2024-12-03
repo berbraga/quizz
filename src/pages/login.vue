@@ -1,7 +1,7 @@
 <template>
   <v-container class="d-flex align-center justify-center ma-0 pa-0" style="height: 100vh;">
     <v-card class="pa-10" elevation="3" style="width: 700px; max-width: 90%; height: 600px;">
-      
+
       <v-row align="center" justify="center">
         <v-img
           src="/capelo.png"
@@ -122,8 +122,10 @@ const handleLogin = async () => {
         if (user && user.password === loginData.password) {
           if (user.isStudent) {
             // Redireciona para a rota do aluno
+            localStorage.setItem('user', JSON.stringify(user));
             router.push("/aluno");
           } else {
+            localStorage.setItem('user', JSON.stringify(user));
             // Redireciona para a rota do professor
             router.push("/professor");
           }

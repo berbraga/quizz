@@ -6,14 +6,16 @@
       </v-card-title>
       <v-card-text>
         <v-form>
-          <div>
-            <select v-model="selected">
-              <option disabled value="">Escolha o nível</option>
-              <option>Difícil</option>
-              <option>Intermediário</option>
-              <option>Fácil</option>
-            </select>
-          </div>
+          <!-- Campo para seleção de nível -->
+          <v-select
+            v-model="quizData.level"
+            :items="levels"
+            label="Escolha o nível"
+            outlined
+            clearable
+            :rules="[rules.required]"
+          ></v-select>
+
           <!-- Campo para Nome do Quiz -->
           <v-text-field
             label="Nome do Quiz"
@@ -40,17 +42,23 @@ import { addData } from "@/services/firebase"; // Função para adicionar ao Fir
 
 const router = useRouter();
 
+// Dados do formulário
 const quizData = reactive({
   name: "",
+  level: "", // Adiciona o nível selecionado aqui
 });
 
+// Níveis disponíveis
+const levels = ["Difícil", "Intermediário", "Fácil"]; // Array de opções para o select
+
+// Regras de validação
 const rules = {
   required: (value) => !!value || "Campo obrigatório",
 };
 
 // Função para criar um quiz
 const createQuiz = async () => {
-  if (quizData.name) {
+  if (quizData.name && quizData.level) {
     try {
       await addData("quizzes", null, {
         ...quizData,
@@ -63,7 +71,7 @@ const createQuiz = async () => {
       alert("Erro ao criar quiz. Tente novamente.");
     }
   } else {
-    alert("Por favor, preencha o nome do quiz.");
+    alert("Por favor, preencha todos os campos.");
   }
 };
 
