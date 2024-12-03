@@ -58,12 +58,15 @@ const customRoutes = [
     component: () => import('@/pages/quizResponder.vue'), // Lazy-loading
     props: true,
   },
-
-
   {
     path: '/aluno',
     name: 'aluno',
     component: () => import('@/pages/aluno.vue'), // Exemplo de lazy-loading
+  },
+  {
+    path: '/perfil',
+    name: 'perfil',
+    component: () => import('@/pages/perfil.vue'), // Exemplo de lazy-loading
   },
 ]
 
