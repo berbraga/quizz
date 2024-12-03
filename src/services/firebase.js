@@ -174,4 +174,30 @@ const doesFieldValueExist = async (collectionName, fieldName, value) => {
   }
 };
 
-export { db, addData, getData, doesDocumentExist, doesFieldValueExist,fetchUserResults };
+const fetchAllQuizzes = async () => {
+  try {
+    const snapshot = await getDocs(collection(db,"quizzes"));
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Erro ao buscar quizzes:", error);
+    throw error;
+  }
+};
+
+const fetchAllUsers = async () => {
+  try {
+    const snapshot = await getDocs(collection(db, "users"));
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Erro ao buscar usuários:", error);
+    throw error;
+  }
+};
+
+export { db, addData, getData, doesDocumentExist, doesFieldValueExist,fetchUserResults,fetchAllQuizzes, fetchAllUsers };

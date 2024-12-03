@@ -80,6 +80,11 @@ const customRoutes = [
     name: 'desempenho',
     component: () => import('@/pages/meuDesempenho.vue'), // Exemplo de lazy-loading
   },
+  {
+    path: '/:userId/ranking',
+    name: 'ranking',
+    component: () => import('@/pages/ranking.vue'), // Exemplo de lazy-loading
+  },
 ]
 
 // Combine as rotas automáticas com as personalizadas

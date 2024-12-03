@@ -20,7 +20,7 @@
         <div class="d-flex my-4">
           <v-img src="/ranking.png" alt="ranking" style="height: 55px;" width="25%"></v-img>
             <v-btn width="75%"
-            style="background-color: cornflowerblue; color: white; font-size: 18px; padding: 12px; height: 50px;">
+            style="background-color: cornflowerblue; color: white; font-size: 18px; padding: 12px; height: 50px;" @click="Ranking">
             Ranking da Turma
             </v-btn>
         </div>
@@ -83,6 +83,10 @@ const perfilCadastro = async () => {
 
 const sair = async () => {
   router.push(`/login`);
+}
+
+const Ranking = async () => {
+  router.push(`/${user.id}/ranking`);
 }
 
 </script>

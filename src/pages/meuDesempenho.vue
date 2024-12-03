@@ -18,11 +18,12 @@ v-container(class="d-flex flex-column align-center justify-center ma-0 pa-0" sty
   v-card(class="pa-0 mt-6 d-flex flex-column" elevation="3" style="width: 700px; max-width: 90%; min-height: 100px;")
     v-card-title(class="d-flex justify-center text-white ma-0 text-h5 bg-primary") Meu Histórico
     v-data-table(
-      :headers="headers"
-      :items="quizzes"
-      item-value="id"
-      class="elevation-1"
-    )
+        :headers="headers"
+        :items="quizzes"
+        item-value="id"
+        class="elevation-1"
+      )       
+
 </template>
 
 <script setup>
