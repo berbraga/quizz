@@ -42,7 +42,11 @@ const user = JSON.parse(localStorage.getItem('user'));
 console.log(user);
 
 const voltar = async () => {
-    router.push(`/professor/${user.id}`);
+    if(user.isStudent == false){
+        router.push(`/professor/${user.id}`)
+  }else{
+        router.push(`/aluno/${user.id}`)
+  }
 }
 
 </script>

@@ -1,18 +1,24 @@
 <template lang="pug">
 v-container(class="d-flex flex-column align-center justify-center ma-0 pa-0" style="height: 85vh;")  
-  v-card(class="pa-0 mt-6 d-flex flex-column" elevation="3" style="width: 700px; max-width: 90%; min-height: 100px;")
+  v-card(class="pa-0 mt-6 d-flex flex-column" elevation="3" style="width: 900px; max-width: 90%; min-height: 100px;")
     v-card-title(class="d-flex justify-center text-white ma-0 text-h5 bg-primary") Ranking dos Alunos
     v-data-table(
-      :headers="headers"
+      :headers="headers.text"
       :items="ranking"
       item-value="position"
       class="elevation-1"
     )
+  div(class="pa-0 mt-6 d-flex flex-column" elevation="3" style="width: 900px; max-width: 90%; min-height: 20px;")
+    v-btn(style="background-color: cornflowerblue; color: white; width: 48%; font-size: 18px; padding: 12px; height: 50px;" block @click="goBack")
+      p Voltar
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { fetchAllQuizzes, fetchAllUsers } from "@/services/firebase"; // Funções de busca para Firestore.
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const ranking = ref([]);
 const headers = [
@@ -78,4 +84,15 @@ onMounted(async () => {
     console.error("Erro ao carregar ranking:", error);
   }
 });
+
+const goBack = () =>{
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  if(user.isStudent == false){
+    router.push(`/professor/${user.id}`)
+  }else{
+    router.push(`/aluno/${user.id}`)
+  }
+  
+ }
 </script>

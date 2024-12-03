@@ -11,7 +11,7 @@
         <div class="d-flex my-4 mt-15">
           <v-img src="/desempenho.png" alt="atuacao" style="height: 55px;" width="25%"></v-img>
             <v-btn width="75%"
-            style="background-color: cornflowerblue; color: white; font-size: 18px; padding: 12px; height: 50px;">
+            style="background-color: cornflowerblue; color: white; font-size: 18px; padding: 12px; height: 50px;" @click="Ranking">
             Desempenho dos Alunos
             </v-btn>
         </div>
@@ -75,7 +75,7 @@ const startQuiz = async () => {
   router.push("/quizAluno");
 }
 const cadastrarPerguntas = async () => {
-  router.push(`/professor/${user.user}/quizProfessor`);
+  router.push(`/professor/${user.id}/quizProfessor`);
 }
 
 const perfilCadastro = async () => {
@@ -86,4 +86,7 @@ const sair = async () => {
   router.push(`/login`);
 }
 
+const Ranking = async () => {
+  router.push(`/${user.id}/ranking`);
+}
 </script>
