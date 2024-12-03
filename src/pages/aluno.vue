@@ -8,7 +8,7 @@
 
 
         <div class="d-flex my-4">
-          <v-img src="/atuacao.png" alt="atuacao" style="height: 55px;" width="25%" @click="MeuDesempenho"></v-img>
+          <v-img src="/atuacao.png" alt="atuacao" style="height: 55px;" width="25%"></v-img>
             <v-btn width="75%"
               @click="MeuDesempenho"
               style="background-color: cornflowerblue; color: white; font-size: 18px; padding: 12px; height: 50px;"

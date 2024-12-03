@@ -83,7 +83,7 @@ const deleteQuestion = async (id) => {
 
 // Função para adicionar uma nova pergunta
 const addQuestion = () => {
-  router.push(`aluno/${user.id}/quiz/${quizId}/add-question`);
+  router.push(`/professor/${user.id}/quiz/${quizId}/add-question`);
 };
 
 // Carrega as perguntas quando o componente é montado

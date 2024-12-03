@@ -65,7 +65,7 @@ onMounted(() => {
   }
 });
 
-import { reactive } from "vue";
+import { reactive, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { addData } from "@/services/firebase";
 

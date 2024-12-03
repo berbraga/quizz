@@ -7,6 +7,9 @@ import {
   getDoc,
   getDocs,
   addDoc,
+  query,
+  where,
+  
 } from "firebase/firestore";
 
 // Firebase configuration
@@ -51,6 +54,45 @@ const addData = async (collectionName, docName = null, data) => {
   } catch (error) {
     console.error("Error adding document:", error);
     throw error;
+  }
+};
+
+
+
+const fetchUserResults = async (userId) => {
+  try {
+    console.log("ENTROU NA FUNÇÃO");
+    const quizzesRef = collection(db, "quizzes"); // Referência à coleção
+    const querySnapshot = await getDocs(quizzesRef); // Obtém todos os documentos da coleção "quizzes"
+
+    const userResults = [];
+
+    querySnapshot.forEach((doc) => {
+      const quiz = doc.data(); // Obtém os dados do documento
+      console.log("Quiz encontrado:", quiz);
+
+      // Certifique-se de que 'results' existe antes de tentar acessá-lo
+      if (quiz.results) {
+        const userQuizResult = quiz.results.find((result) => result.userId === userId);
+
+        if (userQuizResult) {
+          userResults.push({
+            name: quiz.name || "Sem Nome",
+            level: quiz.level || "Sem Nível",
+            accuracy: userQuizResult.accuracy || 0,
+            correct: userQuizResult.correct || 0,
+            incorrect: userQuizResult.incorrect || 0,
+            timestamp: userQuizResult.timestamp || "Sem Data",
+          });
+        }
+      }
+    });
+
+    console.log("Resultados do usuário:", userResults);
+    return userResults;
+  } catch (error) {
+    console.error("Erro ao buscar resultados:", error);
+    return [];
   }
 };
 
@@ -132,4 +174,4 @@ const doesFieldValueExist = async (collectionName, fieldName, value) => {
   }
 };
 
-export { db, addData, getData, doesDocumentExist, doesFieldValueExist };
+export { db, addData, getData, doesDocumentExist, doesFieldValueExist,fetchUserResults };

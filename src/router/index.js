@@ -61,13 +61,6 @@ const customRoutes = [
     props: true,
   },
   {
-    path: '/aluno/:alunoId/desempenho',
-    name: 'alunoDesempenho',
-    component: () => import('@/pages/alunoDesempenho.vue'), // Lazy-loading
-
-  },
-
-  {
     path: '/aluno/:alunoId',
     name: 'aluno',
     component: () => import('@/pages/aluno.vue'), // Exemplo de lazy-loading
@@ -83,7 +76,7 @@ const customRoutes = [
     component: () => import('@/pages/semPermissao.vue'), // Exemplo de lazy-loading
   },
   {
-    path: '/desempenho',
+    path: '/aluno/:alunoId/desempenho',
     name: 'desempenho',
     component: () => import('@/pages/meuDesempenho.vue'), // Exemplo de lazy-loading
   },

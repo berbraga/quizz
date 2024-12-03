@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { addData } from "@/services/firebase"; // Função para adicionar ao Firestore
 
@@ -46,7 +46,7 @@ onMounted(() => {
 
 const user = JSON.parse(localStorage.getItem('user'));
 
-if (!user || !user.isStudent) {
+if (!user || user.isStudent) {
   router.push('/sem-permissao'); // Redireciona para a página de sem permissão se não for professor
 }
 });
@@ -76,8 +76,7 @@ const createQuiz = async () => {
       alert("Quiz criado com sucesso!");
       router.push(`/professor/${user.id}`); // Redireciona para a página de quizzes
     } catch (error) {
-      console.error("Erro ao criar quiz:", error);
-      alert("Erro ao criar quiz. Tente novamente.");
+
     }
   } else {
     alert("Por favor, preencha todos os campos.");
