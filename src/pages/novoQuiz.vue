@@ -41,10 +41,10 @@ import { useRouter } from "vue-router";
 import { addData } from "@/services/firebase"; // Função para adicionar ao Firestore
 
 const router = useRouter();
+const user = JSON.parse(localStorage.getItem('user'));
 
 onMounted(() => {
 
-const user = JSON.parse(localStorage.getItem('user'));
 
 if (!user || user.isStudent) {
   router.push('/sem-permissao'); // Redireciona para a página de sem permissão se não for professor

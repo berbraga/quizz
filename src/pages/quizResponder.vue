@@ -1,9 +1,10 @@
 <template>
-  <v-container class="py-5 d-flex align-center justify-center" style="height: 100vh;">
+  <v-container
+    class="py-5 d-flex align-center justify-center"
+    style="height: 100vh"
+  >
     <v-card class="text-center" width="800px" max-width="600">
-      <v-card-title>
-        Responda o Quiz: {{ quizName }}
-      </v-card-title>
+      <v-card-title> Responda o Quiz: {{ quizName }} </v-card-title>
       <v-card-text>
         <div v-if="questions.length">
           <!-- Pergunta Atual -->
@@ -18,9 +19,10 @@
               <v-btn
                 v-for="(answer, i) in questions[currentQuestionIndex].answers"
                 :key="i"
-                class="my-2"
+                class="my-2 auto-grow"
                 color="primary"
                 block
+                style="white-space: normal; text-align: left"
                 @click="selectAnswer(i)"
               >
                 {{ answer }}
@@ -56,7 +58,13 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { getDocs, collection, doc, updateDoc, arrayUnion } from "firebase/firestore"; // Importa arrayUnion
+import {
+  getDocs,
+  collection,
+  doc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore"; // Importa arrayUnion
 import { db } from "@/services/firebase";
 
 const route = useRoute();
@@ -81,7 +89,7 @@ const fetchQuestions = async () => {
     }));
     questions.value = questionList;
     answers.value = Array(questionList.length).fill(null); // Inicializa respostas
-    console.log()
+    console.log();
     startTimer(); // Inicia o timer para a primeira pergunta
   } catch (error) {
     console.error("Erro ao carregar as perguntas:", error);
@@ -137,7 +145,7 @@ const prevQuestion = () => {
 // Função para enviar as respostas e salvar acertos/erros no Firestore
 const submitQuiz = async () => {
   clearInterval(timerInterval); // Para o timer ao finalizar o quiz
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem("user"));
   let correctCount = 0;
 
   // Conta as respostas corretas
@@ -152,10 +160,10 @@ const submitQuiz = async () => {
   const accuracy = ((correctCount / totalQuestions) * 100).toFixed(2);
 
   try {
-    const user = JSON.parse(localStorage.getItem('user')); // Obtém o usuário atual
+    const user = JSON.parse(localStorage.getItem("user")); // Obtém o usuário atual
     const quizRef = doc(db, `quizzes/${quizId}`);
     const newResult = {
-      userId: user?.id || 'guest', // ID do usuário ou 'guest'
+      userId: user?.id || "guest", // ID do usuário ou 'guest'
       correct: correctCount,
       incorrect: incorrectCount,
       accuracy: parseFloat(accuracy),
@@ -170,16 +178,15 @@ const submitQuiz = async () => {
     alert(
       `Você acertou ${correctCount} de ${totalQuestions} perguntas. Porcentagem de acerto: ${accuracy}%`
     );
-
   } catch (error) {
     console.error("Erro ao salvar os resultados:", error);
     alert("Erro ao salvar os resultados do quiz. Tente novamente.");
   }
 
-  if(user.isStudent == false){
-      router.push(`/professor/${user.id}`)
-    }else{
-      router.push(`/aluno/${user.id}`)
+  if (user.isStudent == false) {
+    router.push(`/professor/${user.id}`);
+  } else {
+    router.push(`/aluno/${user.id}`);
   }
 };
 
@@ -192,7 +199,12 @@ onUnmounted(() => {
 });
 </script>
 
-
 <style scoped>
-/* Estilização adicional, se necessário */
+.auto-grow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px; /* Ajuste para deixar o botão mais espaçoso */
+  word-break: break-word; /* Permite quebra de linha para textos grandes */
+}
 </style>
